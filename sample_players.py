@@ -230,6 +230,7 @@ if __name__ == "__main__":
 
     # create an isolation board (by default 7x7)
     player1 = RandomPlayer()
+    # player1 = HumanPlayer()
     player2 = GreedyPlayer()
     game = Board(player1, player2)
 
@@ -244,13 +245,14 @@ if __name__ == "__main__":
     assert(player1 == game.active_player)
 
     # get a list of the legal moves available to the active player
-    print(game.get_legal_moves())
+    print('Legal moves for active player:', game.get_legal_moves())
 
     # get a successor of the current state by making a copy of the board and
     # applying a move. Notice that this does NOT change the calling object
     # (unlike .apply_move()).
     new_game = game.forecast_move((1, 1))
     assert(new_game.to_string() != game.to_string())
+    print("\nThis is just a forecast")
     print("\nOld state:\n{}".format(game.to_string()))
     print("\nNew state:\n{}".format(new_game.to_string()))
 

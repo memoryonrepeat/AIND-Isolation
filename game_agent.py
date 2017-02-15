@@ -257,6 +257,7 @@ class CustomPlayer:
             # if v >= beta:
             #     return v, move
 
+            # Still can update alpha for lower branches to prune
             alpha = max(alpha, v)
 
         return v, optimalMove

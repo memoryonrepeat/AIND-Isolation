@@ -183,6 +183,27 @@ class CustomPlayer:
 
         return max([(self.min_value(game.forecast_move(m), depth-1), m) for m in game.get_legal_moves()])
         
+    def max_value_alphabeta(self, game, depth, alpha, beta):
+        if depth==0 or not game.get_legal_moves():  # Terminal state --> return utility
+            return self.score(game, self)
+        v = float("-inf")
+        for move in game.get_legal_moves():
+            v = max(v, self.min_value_alphabeta(game.forecast_move(move), depth-1, alpha, beta))
+            if v >= beta:
+                return v
+            alpha = max(alpha, v)
+        return v
+
+    def min_value_alphabeta(self, game, depth, alpha, beta):
+        if depth==0 or not game.get_legal_moves():  # Terminal state --> return utility
+            return self.score(game, self)
+        v = float("inf")
+        for move in game.get_legal_moves():
+            v = min(v, self.max_value_alphabeta(game.forecast_move(move), depth-1, alpha, beta))
+            if v <= alpha:
+                return v
+            beta = min(beta, v)
+        return v
 
     def alphabeta(self, game, depth, alpha=float("-inf"), beta=float("inf"), maximizing_player=True):
         """Implement minimax search with alpha-beta pruning as described in the
@@ -225,4 +246,17 @@ class CustomPlayer:
         if self.time_left() < self.TIMER_THRESHOLD:
             raise Timeout()
 
-        return max([(self.min_value(game.forecast_move(m), depth-1), m) for m in game.get_legal_moves()])
+        optimalMove = (-1,-1)
+
+        v = float("-inf")
+
+        for move in game.get_legal_moves():
+            v,optimalMove = max((v,optimalMove), (self.min_value_alphabeta(game.forecast_move(move), depth-1, alpha, beta),move))
+            
+            # There is no branch higher than root, so no pruning can happen here. 
+            # if v >= beta:
+            #     return v, move
+
+            alpha = max(alpha, v)
+
+        return v, optimalMove

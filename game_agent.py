@@ -6,7 +6,6 @@ augment the test suite with your own test cases to further test your code.
 You must test your agent's strength against a set of agents with known
 relative strength using tournament.py and include the results in your report.
 """
-import random
 
 
 class Timeout(Exception):
@@ -129,14 +128,33 @@ class CustomPlayer:
             # here in order to avoid timeout. The try/except block will
             # automatically catch the exception raised by the search method
             # when the timer gets close to expiring
-            score, move = self.minimax(game, 1)
+            depth = 1
+            while(True):
+                score, move = self.minimax(game, depth)
+                depth += 1
 
         except Timeout:
             # Handle any actions required at timeout, if necessary
-            print("Timeout")
+            return move
 
         # Return the best move from the last completed search iteration
         return move
+
+    def max_value(self, game):
+        if game.utility != 0:  # Terminal state --> return utility
+            return self.score(game, self)
+        v = float("-inf")
+        for move in game.get_legal_moves():
+            v = max(v, self.min_value(game.forecast_move(move)))
+        return v
+
+    def min_value(self, game):
+        if game.utility != 0:  # Terminal state --> return utility
+            return self.score(game, self)
+        v = float("inf")
+        for move in game.get_legal_moves():
+            v = min(v, self.max_value(game.forecast_move(move)))
+        return v
 
     def minimax(self, game, depth, maximizing_player=True):
         """Implement the minimax search algorithm as described in the lectures.
@@ -172,7 +190,11 @@ class CustomPlayer:
         if self.time_left() < self.TIMER_THRESHOLD:
             raise Timeout()
 
-        score, move = max([(self.score(game.forecast_move(m), self), m) for m in game.get_legal_moves()])
+        # Fixed depth = 1 to pass interface test
+        # score, move = max([(self.score(game.forecast_move(m), self), m) for m in game.get_legal_moves()])
+        # return score, move
+
+        score, move = max([(self.min_value(game.forecast_move(m)), m) for m in game.get_legal_moves()])
         return score, move
 
     def alphabeta(self, game, depth, alpha=float("-inf"), beta=float("inf"), maximizing_player=True):

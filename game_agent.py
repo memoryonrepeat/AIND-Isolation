@@ -225,5 +225,4 @@ class CustomPlayer:
         if self.time_left() < self.TIMER_THRESHOLD:
             raise Timeout()
 
-        # TODO: finish this function!
-        raise NotImplementedError
+        return max([(self.min_value(game.forecast_move(m), depth-1), m) for m in game.get_legal_moves()])

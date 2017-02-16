@@ -126,8 +126,8 @@ class CustomPlayer:
         if not legal_moves:
             return (-1,-1)
 
-        if self.time_left() <= 10:
-            return legal_moves[random.randint(0, len(legal_moves) - 1)]
+        move = legal_moves[random.randint(0, len(legal_moves) - 1)]
+        score = float("-inf")
 
         # Perform any required initializations, including selecting an initial
         # move from the game board (i.e., an opening book), or returning
@@ -144,11 +144,13 @@ class CustomPlayer:
             else:
                 search_method = self.alphabeta
 
+            depth = 1
+
             while (True):
-                score, move = self.minimax(game, self.search_depth)
+                score, move = self.minimax(game, depth)
                 if not self.iterative:
                     return move
-                self.search_depth += 1
+                depth += 1
 
         except Timeout:
             # Handle any actions required at timeout, if necessary

@@ -145,9 +145,8 @@ class CustomPlayer:
                 search_method = self.alphabeta
 
             depth = 1
-
             while (True):
-                score, move = self.minimax(game, depth)
+                score, move = search_method(game, depth)
                 if not self.iterative:
                     return move
                 depth += 1

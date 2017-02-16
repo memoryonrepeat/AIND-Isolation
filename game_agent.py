@@ -7,6 +7,7 @@ You must test your agent's strength against a set of agents with known
 relative strength using tournament.py and include the results in your report.
 """
 
+import random
 
 class Timeout(Exception):
     """Subclass base exception for code clarity."""
@@ -35,7 +36,15 @@ def custom_score(game, player):
     float
         The heuristic value of the current game state to the specified player.
     """
-    return float(len(game.get_legal_moves(game.active_player)) - len(game.get_legal_moves(game.inactive_player)))
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    return float(own_moves - opp_moves)
 
 class CustomPlayer:
     """Game-playing agent that chooses a move using your evaluation function
@@ -114,6 +123,12 @@ class CustomPlayer:
 
         self.time_left = time_left
 
+        if not legal_moves:
+            return (-1,-1)
+
+        if self.time_left() <= 10:
+            return legal_moves[random.randint(0, len(legal_moves) - 1)]
+
         # Perform any required initializations, including selecting an initial
         # move from the game board (i.e., an opening book), or returning
         # immediately if there are no legal moves
@@ -123,12 +138,17 @@ class CustomPlayer:
             # here in order to avoid timeout. The try/except block will
             # automatically catch the exception raised by the search method
             # when the timer gets close to expiring
-            depth = 1
+
+            if self.method == "minimax":
+                search_method = self.minimax
+            else:
+                search_method = self.alphabeta
+
             while (True):
-                score, move = self.minimax(game, depth)
+                score, move = self.minimax(game, self.search_depth)
                 if not self.iterative:
                     return move
-                depth += 1
+                self.search_depth += 1
 
         except Timeout:
             # Handle any actions required at timeout, if necessary

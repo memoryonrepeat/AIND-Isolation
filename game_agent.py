@@ -117,8 +117,6 @@ class CustomPlayer:
 
         self.time_left = time_left
 
-        # TODO: finish this function!
-
         # Perform any required initializations, including selecting an initial
         # move from the game board (i.e., an opening book), or returning
         # immediately if there are no legal moves
@@ -128,7 +126,12 @@ class CustomPlayer:
             # here in order to avoid timeout. The try/except block will
             # automatically catch the exception raised by the search method
             # when the timer gets close to expiring
-            score, move = self.minimax(game, 1)
+            depth = 1
+            while (True):
+                score, move = self.minimax(game, depth)
+                if not self.iterative:
+                    return move
+                depth += 1
 
         except Timeout:
             # Handle any actions required at timeout, if necessary

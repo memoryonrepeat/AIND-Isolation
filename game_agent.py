@@ -159,6 +159,8 @@ class CustomPlayer:
         return move
 
     def max_value(self, game, depth, toPrune=False, alpha=float("-inf"), beta=float("inf")):
+        if self.time_left() < self.TIMER_THRESHOLD:
+            raise Timeout()
         if depth==0 or not game.get_legal_moves():  # Terminal state --> return utility
             return self.score(game, self)
         if not toPrune: # Just recursively go deeper with no worry about pruning
@@ -180,6 +182,8 @@ class CustomPlayer:
 
 
     def min_value(self, game, depth, toPrune=False, alpha=float("-inf"), beta=float("inf")):
+        if self.time_left() < self.TIMER_THRESHOLD:
+            raise Timeout()
         if depth==0 or not game.get_legal_moves():  # Terminal state --> return utility
             return self.score(game, self)
         if not toPrune: # Just recursively go deeper with no worry about pruning
@@ -233,8 +237,10 @@ class CustomPlayer:
         """
         if self.time_left() < self.TIMER_THRESHOLD:
             raise Timeout()
-
-        return max([(self.min_value(game.forecast_move(m), depth-1), m) for m in game.get_legal_moves()])
+        if maximizing_player:
+            return max([(self.min_value(game.forecast_move(m), depth-1), m) for m in game.get_legal_moves()])
+        else:
+            return min([(self.max_value(game.forecast_move(m), depth-1), m) for m in game.get_legal_moves()])
 
     def alphabeta(self, game, depth, alpha=float("-inf"), beta=float("inf"), maximizing_player=True):
         """Implement minimax search with alpha-beta pruning as described in the
@@ -278,16 +284,22 @@ class CustomPlayer:
             raise Timeout()
 
         optimalMove = (-1,-1)
-        v = float("-inf")
 
-        for move in game.get_legal_moves():
-            v,optimalMove = max((v,optimalMove), (self.min_value(game.forecast_move(move), depth-1, True, alpha, beta),move))
-            
-            # There is no branch higher than root, so no pruning can happen here. 
-            # if v >= beta:
-            #     return v, move
+        if maximizing_player:
+            v = float("-inf")
+            for move in game.get_legal_moves():
+                v,optimalMove = max((v,optimalMove), (self.min_value(game.forecast_move(move), depth-1, True, alpha, beta),move))
+                
+                # There is no branch higher than root, so no pruning can happen here. 
+                # if v >= beta:
+                #     return v, move
 
-            # Still can update alpha for lower branches to prune
-            alpha = max(alpha, v)
+                # Still can update alpha for lower branches to prune
+                alpha = max(alpha, v)
+        else:
+            v = float("inf")
+            for move in game.get_legal_moves():
+                v,optimalMove = min((v,optimalMove), (self.max_value(game.forecast_move(move), depth-1, True, alpha, beta),move))
+                beta = min(beta, v)
 
         return v, optimalMove

@@ -44,6 +44,7 @@ TIMEOUT_WARNING = "One or more agents lost a match this round due to " + \
                   "tournament play."
 
 DESCRIPTION = """
+
 ########## NEW TOURNAMENT BEGINS ##########
 This script evaluates the performance of the custom heuristic function by
 comparing the strength of an agent using iterative deepening (ID) search with
@@ -191,9 +192,11 @@ def main():
             win_ratio = play_round(agents, NUM_MATCHES, log_file)
 
             print("\n\nResults:")
+            print("\n\nResults:", file=log_file)
             print("----------")
+            print("----------", file=log_file)
             print("{!s:<15}{:>10.2f}%".format(agentUT.name, win_ratio))
-
+            print("{!s:<15}{:>10.2f}%".format(agentUT.name, win_ratio), file=log_file)
 
 if __name__ == "__main__":
     main()

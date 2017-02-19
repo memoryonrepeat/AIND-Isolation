@@ -8,6 +8,7 @@ relative strength using tournament.py and include the results in your report.
 """
 
 import random
+import math
 
 class Timeout(Exception):
     """Subclass base exception for code clarity."""
@@ -15,27 +16,6 @@ class Timeout(Exception):
 
 
 def custom_score(game, player):
-    """Calculate the heuristic value of a game state from the point of view
-    of the given player.
-
-    Note: this function should be called from within a Player instance as
-    `self.score()` -- you should not need to call this function directly.
-
-    Parameters
-    ----------
-    game : `isolation.Board`
-        An instance of `isolation.Board` encoding the current state of the
-        game (e.g., player locations and blocked cells).
-
-    player : object
-        A player instance in the current game (i.e., an object corresponding to
-        one of the player objects `game.__player_1__` or `game.__player_2__`.)
-
-    Returns
-    -------
-    float
-        The heuristic value of the current game state to the specified player.
-    """
     if game.is_loser(player):
         return float("-inf")
 
@@ -44,7 +24,7 @@ def custom_score(game, player):
 
     own_moves = len(game.get_legal_moves(player))
     opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
-    return float(own_moves - opp_moves)
+    return float(2*own_moves - 3*opp_moves)
 
 class CustomPlayer:
     """Game-playing agent that chooses a move using your evaluation function
@@ -123,11 +103,17 @@ class CustomPlayer:
 
         self.time_left = time_left
 
+        if self.time_left() < self.TIMER_THRESHOLD:
+            raise Timeout()
+
         if not legal_moves:
             return (-1,-1)
 
-        move = legal_moves[random.randint(0, len(legal_moves) - 1)]
-        score = float("-inf")
+        if game.move_count == 1:
+            return math.floor(game.height / 2), math.floor(game.width / 2)
+
+        best_move = legal_moves[random.randint(0, len(legal_moves) - 1)]
+        best_score = float("-inf")
 
         # Perform any required initializations, including selecting an initial
         # move from the game board (i.e., an opening book), or returning
@@ -146,63 +132,88 @@ class CustomPlayer:
 
             depth = 1
             while (True):
+                if self.time_left() < self.TIMER_THRESHOLD:
+                    raise Timeout()
                 score, move = search_method(game, depth)
+                if score > best_score:
+                    best_score = score
+                    best_move = move
                 if not self.iterative:
-                    return move
+                    return best_move
                 depth += 1
+                # if self.search_depth != -1 and depth > self.search_depth:
+                #     break
 
         except Timeout:
             # Handle any actions required at timeout, if necessary
-            return move
+            return best_move
 
         # Return the best move from the last completed search iteration
-        return move
+        return best_move
 
+    # The overall purpose of alphabeta pruning is: 
+    # - For MAX player to gradually find the move that yields highest utility (best choice by MAX player definition)
+    #   starting from the theoretical worst utility (minus infinity).
+    # - For MIN player to gradually find the move that yields lowest utility (best choice by MIN player definition)
+    #   starting from the theoretical worst utility (plus infinity).
+    # - Therefore, in MAX player's turn, prune branches that can yield a worse (means higher) utility than current best choice 
+    #   (lowest so far) for MIN player since they will be ignored by the predecessor MIN player anyway.
     def max_value(self, game, depth, toPrune=False, alpha=float("-inf"), beta=float("inf")):
         if self.time_left() < self.TIMER_THRESHOLD:
             raise Timeout()
         if depth==0 or not game.get_legal_moves():  # Terminal state --> return utility
-            return self.score(game, self)
-        if not toPrune: # Just recursively go deeper with no worry about pruning
-            return max(self.min_value(game.forecast_move(move), depth-1) for move in game.get_legal_moves()) 
-        # The overall purpose of alphabeta pruning is: 
-        # - For MAX player to gradually find the move that yields highest utility (best choice by MAX player definition)
-        #   starting from the theoretical worst utility (minus infinity).
-        # - For MIN player to gradually find the move that yields lowest utility (best choice by MIN player definition)
-        #   starting from the theoretical worst utility (plus infinity).
-        # - Therefore, in MAX player's turn, prune branches that can yield a worse (means higher) utility than current best choice 
-        #   (lowest so far) for MIN player since they will be ignored by the predecessor MIN player anyway.
+            return self.score(game, self),(-1,-1)
+
+        best_move = (-1,-1)
         v = float("-inf")
+
+        if not toPrune: # Just recursively go deeper with no worry about pruning
+            for move in game.get_legal_moves():
+                if self.time_left() < self.TIMER_THRESHOLD:
+                    raise Timeout()
+                v,best_move = max((v,best_move), (self.min_value(game.forecast_move(move), depth-1)[0],move))
+            return v,best_move
+
         for move in game.get_legal_moves():
-            v = max(v, self.min_value(game.forecast_move(move), depth-1, True, alpha, beta))
+            if self.time_left() < self.TIMER_THRESHOLD:
+                raise Timeout()
+            v,best_move = max((v,best_move), (self.min_value(game.forecast_move(move), depth-1, True, alpha, beta)[0],move))
             if v >= beta:
-                return v
+                return v,best_move
             alpha = max(alpha, v)
-        return v
+        return v,best_move
 
-
+    # The overall purpose of alphabeta pruning is: 
+    # - For MAX player to gradually find the move that yields highest utility (best choice by MAX player definition)
+    #   starting from the theoretical worst utility (minus infinity).
+    # - For MIN player to gradually find the move that yields lowest utility (best choice by MIN player definition)
+    #   starting from the theoretical worst utility (plus infinity).
+    # - Therefore, in MIN player's turn, prune branches that can yield a worse (means lower) utility than current best choice 
+    #   (highest so far) for MAX player since they will be ignored by the predecessor MAX player anyway.
     def min_value(self, game, depth, toPrune=False, alpha=float("-inf"), beta=float("inf")):
         if self.time_left() < self.TIMER_THRESHOLD:
             raise Timeout()
         if depth==0 or not game.get_legal_moves():  # Terminal state --> return utility
-            return self.score(game, self)
-        if not toPrune: # Just recursively go deeper with no worry about pruning
-            return min(self.max_value(game.forecast_move(move), depth-1) for move in game.get_legal_moves()) 
-        # The overall purpose of alphabeta pruning is: 
-        # - For MAX player to gradually find the move that yields highest utility (best choice by MAX player definition)
-        #   starting from the theoretical worst utility (minus infinity).
-        # - For MIN player to gradually find the move that yields lowest utility (best choice by MIN player definition)
-        #   starting from the theoretical worst utility (plus infinity).
-        # - Therefore, in MIN player's turn, prune branches that can yield a worse (means lower) utility than current best choice 
-        #   (highest so far) for MAX player since they will be ignored by the predecessor MAX player anyway.
-        v = float("inf")
-        for move in game.get_legal_moves():
-            v = min(v, self.max_value(game.forecast_move(move), depth-1, True, alpha, beta))
-            if v <= alpha:
-                return v
-            beta = min(beta, v)
-        return v
+            return self.score(game, self),(-1,-1)
 
+        best_move = (-1,-1)
+        v = float("inf")
+
+        if not toPrune: # Just recursively go deeper with no worry about pruning
+            for move in game.get_legal_moves():
+                if self.time_left() < self.TIMER_THRESHOLD:
+                    raise Timeout()
+                v,best_move = min((v,best_move), (self.max_value(game.forecast_move(move), depth-1)[0],move))
+            return v,best_move
+
+        for move in game.get_legal_moves():
+            if self.time_left() < self.TIMER_THRESHOLD:
+                raise Timeout()
+            v,best_move = min((v,best_move), (self.max_value(game.forecast_move(move), depth-1, True, alpha, beta)[0],move))
+            if v <= alpha:
+                return v,best_move
+            beta = min(beta, v)
+        return v,best_move
 
     def minimax(self, game, depth, maximizing_player=True):
         """Implement the minimax search algorithm as described in the lectures.
@@ -239,9 +250,9 @@ class CustomPlayer:
             raise Timeout()
 
         if maximizing_player:
-            return max([(self.min_value(game.forecast_move(m), depth-1), m) for m in game.get_legal_moves()])
+            return self.max_value(game, depth)
         else:
-            return min([(self.max_value(game.forecast_move(m), depth-1), m) for m in game.get_legal_moves()])
+            return self.min_value(game, depth)
 
     def alphabeta(self, game, depth, alpha=float("-inf"), beta=float("inf"), maximizing_player=True):
         """Implement minimax search with alpha-beta pruning as described in the
@@ -284,29 +295,7 @@ class CustomPlayer:
         if self.time_left() < self.TIMER_THRESHOLD:
             raise Timeout()
 
-        optimalMove = (-1,-1)
-
         if maximizing_player:
-            v = float("-inf")
-            for move in game.get_legal_moves():
-                v,optimalMove = max((v,optimalMove), (self.min_value(game.forecast_move(move), depth-1, True, alpha, beta),move))
-                
-                # There is no branch higher than root, so no pruning can happen here. 
-                # if v >= beta:
-                #     return v, move
-
-                # Still can update alpha for lower branches to prune
-                alpha = max(alpha, v)
+            return self.max_value(game, depth, True, alpha, beta)
         else:
-            v = float("inf")
-            for move in game.get_legal_moves():
-                v,optimalMove = min((v,optimalMove), (self.max_value(game.forecast_move(move), depth-1, True, alpha, beta),move))
-
-                # There is no branch higher than root, so no pruning can happen here. 
-                # if v <= alpha:
-                #     return v, move
-
-                # Still can update beta for lower branches to prune
-                beta = min(beta, v)
-
-        return v, optimalMove
+            return self.min_value(game, depth, True, alpha, beta)

@@ -22,6 +22,7 @@ initiative in the second match with agentB at (5, 2) as player 1 and agentA at
 import itertools
 import random
 import warnings
+import inspect
 
 from collections import namedtuple
 
@@ -33,6 +34,7 @@ from sample_players import improved_score
 from game_agent import CustomPlayer
 from game_agent import custom_score
 
+
 NUM_MATCHES = 5  # number of matches against each opponent
 TIME_LIMIT = 150  # number of milliseconds before timeout
 
@@ -42,6 +44,8 @@ TIMEOUT_WARNING = "One or more agents lost a match this round due to " + \
                   "time for the function to return, and may need to " + \
                   "increase this margin to avoid timeouts during  " + \
                   "tournament play."
+
+TIMEOUT_DETAILS = "\nTimeout occurred. {}: {} ; {}: {}"
 
 DESCRIPTION = """
 
@@ -54,6 +58,7 @@ performance of a basic agent using Iterative Deepening and the "improved"
 heuristic (from lecture) on your hardware.  The `Student` agent then measures
 the performance of Iterative Deepening and the custom heuristic against the
 same opponents.
+###########################################
 """
 
 Agent = namedtuple("Agent", ["player", "name"])
@@ -99,8 +104,8 @@ def play_match(player1, player2, log_file):
                 num_invalid_moves[player1] += 1
 
     if sum(num_timeouts.values()) != 0:
-        print(TIMEOUT_WARNING)
-        print(TIMEOUT_WARNING, file=log_file)
+        print(TIMEOUT_DETAILS.format(player1, num_timeouts[player1],player2, num_timeouts[player2]))
+        print(TIMEOUT_DETAILS.format(player1, num_timeouts[player1],player2, num_timeouts[player2]), file=log_file)
         # warnings.warn(TIMEOUT_WARNING)
 
     return num_wins[player1], num_wins[player2]
@@ -174,8 +179,13 @@ def main():
                    Agent(CustomPlayer(score_fn=custom_score, **CUSTOM_ARGS), "Student")]
 
     with open("result.txt", "a") as log_file:
+
         print(DESCRIPTION)
         print(DESCRIPTION, file=log_file)
+
+        print(inspect.getsource(custom_score))
+        print(inspect.getsource(custom_score), file=log_file)
+
         for agentUT in test_agents:
 
             print("")

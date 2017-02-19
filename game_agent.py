@@ -237,6 +237,7 @@ class CustomPlayer:
         """
         if self.time_left() < self.TIMER_THRESHOLD:
             raise Timeout()
+
         if maximizing_player:
             return max([(self.min_value(game.forecast_move(m), depth-1), m) for m in game.get_legal_moves()])
         else:
@@ -300,6 +301,12 @@ class CustomPlayer:
             v = float("inf")
             for move in game.get_legal_moves():
                 v,optimalMove = min((v,optimalMove), (self.max_value(game.forecast_move(move), depth-1, True, alpha, beta),move))
+
+                # There is no branch higher than root, so no pruning can happen here. 
+                # if v <= alpha:
+                #     return v, move
+
+                # Still can update beta for lower branches to prune
                 beta = min(beta, v)
 
         return v, optimalMove

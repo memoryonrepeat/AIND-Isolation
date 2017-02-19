@@ -44,6 +44,7 @@ TIMEOUT_WARNING = "One or more agents lost a match this round due to " + \
                   "tournament play."
 
 DESCRIPTION = """
+########## NEW TOURNAMENT BEGINS ##########
 This script evaluates the performance of the custom heuristic function by
 comparing the strength of an agent using iterative deepening (ID) search with
 alpha-beta pruning against the strength rating of agents using other heuristic
@@ -57,7 +58,7 @@ same opponents.
 Agent = namedtuple("Agent", ["player", "name"])
 
 
-def play_match(player1, player2):
+def play_match(player1, player2, log_file):
     """
     Play a "fair" set of matches between two agents by playing two games
     between the players, forcing each agent to play from randomly selected
@@ -97,12 +98,14 @@ def play_match(player1, player2):
                 num_invalid_moves[player1] += 1
 
     if sum(num_timeouts.values()) != 0:
-        warnings.warn(TIMEOUT_WARNING)
+        print(TIMEOUT_WARNING)
+        print(TIMEOUT_WARNING, file=log_file)
+        # warnings.warn(TIMEOUT_WARNING)
 
     return num_wins[player1], num_wins[player2]
 
 
-def play_round(agents, num_matches):
+def play_round(agents, num_matches, log_file):
     """
     Play one round (i.e., a single match between each pair of opponents)
     """
@@ -113,16 +116,20 @@ def play_round(agents, num_matches):
     print("\nPlaying Matches:")
     print("----------")
 
+    print("\nPlaying Matches:", file=log_file)
+    print("----------", file=log_file)
+
     for idx, agent_2 in enumerate(agents[:-1]):
 
         counts = {agent_1.player: 0., agent_2.player: 0.}
         names = [agent_1.name, agent_2.name]
         print("  Match {}: {!s:^11} vs {!s:^11}".format(idx + 1, *names), end=' ')
+        print("  Match {}: {!s:^11} vs {!s:^11}".format(idx + 1, *names), end=' ', file=log_file)
 
         # Each player takes a turn going first
         for p1, p2 in itertools.permutations((agent_1.player, agent_2.player)):
             for _ in range(num_matches):
-                score_1, score_2 = play_match(p1, p2)
+                score_1, score_2 = play_match(p1, p2, log_file)
                 counts[p1] += score_1
                 counts[p2] += score_2
                 total += score_1 + score_2
@@ -131,6 +138,8 @@ def play_round(agents, num_matches):
 
         print("\tResult: {} to {}".format(int(counts[agent_1.player]),
                                           int(counts[agent_2.player])))
+        print("\tResult: {} to {}".format(int(counts[agent_1.player]),
+                                          int(counts[agent_2.player])), file=log_file)
 
     return 100. * wins / total
 
@@ -163,19 +172,27 @@ def main():
     test_agents = [Agent(CustomPlayer(score_fn=improved_score, **CUSTOM_ARGS), "ID_Improved"),
                    Agent(CustomPlayer(score_fn=custom_score, **CUSTOM_ARGS), "Student")]
 
-    print(DESCRIPTION)
-    for agentUT in test_agents:
-        print("")
-        print("*************************")
-        print("{:^25}".format("Evaluating: " + agentUT.name))
-        print("*************************")
+    with open("result.txt", "a") as log_file:
+        print(DESCRIPTION)
+        print(DESCRIPTION, file=log_file)
+        for agentUT in test_agents:
 
-        agents = random_agents + mm_agents + ab_agents + [agentUT]
-        win_ratio = play_round(agents, NUM_MATCHES)
+            print("")
+            print("*************************")
+            print("{:^25}".format("Evaluating: " + agentUT.name))
+            print("*************************")
 
-        print("\n\nResults:")
-        print("----------")
-        print("{!s:<15}{:>10.2f}%".format(agentUT.name, win_ratio))
+            print("", file=log_file)
+            print("*************************", file=log_file)
+            print("{:^25}".format("Evaluating: " + agentUT.name), file=log_file)
+            print("*************************", file=log_file)
+
+            agents = random_agents + mm_agents + ab_agents + [agentUT]
+            win_ratio = play_round(agents, NUM_MATCHES, log_file)
+
+            print("\n\nResults:")
+            print("----------")
+            print("{!s:<15}{:>10.2f}%".format(agentUT.name, win_ratio))
 
 
 if __name__ == "__main__":

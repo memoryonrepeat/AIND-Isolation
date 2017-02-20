@@ -19,7 +19,7 @@ def lecture_heuristic(own_moves, opp_moves):
 
 # penalize opp move harder and take into account remaining moves
 def lecture_heuristic_improved(own_moves, opp_moves, normalized_remaining_moves):
-    return float(own_moves - 2*opp_moves)
+    return float(own_moves - 3*opp_moves)
 
 # only cares about its own survival
 # red alert when remaining moves < 3
@@ -63,7 +63,7 @@ def custom_score(game, player):
     positional_score = positional_heuristic(location, center, normalized_remaining_moves)
     endgame_score = endgame_heuristic(game, player, move_count, normalized_remaining_moves)
 
-    return lecture_score_improved + survival_score + 2*endgame_score
+    return lecture_score_improved + 2*survival_score + 3*endgame_score
     
 
 class CustomPlayer:

@@ -18,29 +18,30 @@ def lecture_heuristic(own_moves, opp_moves):
     return float(own_moves - opp_moves)
 
 # penalize opp move harder and take into account remaining moves
-def lecture_heuristic_improved(own_moves, opp_moves, remaining_moves):
-    return (own_moves - 2*opp_moves)/remaining_moves
+def lecture_heuristic_improved(own_moves, opp_moves, normalized_remaining_moves):
+    return float(own_moves - 2*opp_moves)
 
 # only cares about its own survival
 # red alert when remaining moves < 3
-def survival_heuristic(own_moves, remaining_moves):
-    return 3*(own_moves-3)/remaining_moves
+def survival_heuristic(own_moves, normalized_remaining_moves):
+    return 3*(own_moves-3)/normalized_remaining_moves
 
 # prioritize moves closer to center at the beginning
-def positional_heuristic(location, center, remaining_moves):
+def positional_heuristic(location, center, normalized_remaining_moves):
     distance = abs(location[0]-center[0])+abs(location[1]-center[1])
-    return remaining_moves/(distance*5) if distance is not 0 else float("inf")
+    return normalized_remaining_moves/(distance*5) if distance is not 0 else float("inf")
 
 # too long --> timeout
 # check back to see what's wrong
-def endgame_heuristic(game, player, move_count):
+def endgame_heuristic(game, player, move_count, normalized_remaining_moves):
     if move_count < 30:
         return 0
     count = 0
     for m in game.get_legal_moves(player):
+        next_game_state = game.forecast_move(m)
         # note: can minus number of opponent moves
-        count += len(game.forecast_move(m).get_legal_moves(player))
-    return count
+        count += len(next_game_state.get_legal_moves(player)) - 2*len(next_game_state.get_legal_moves(game.get_opponent(player)))
+    return count/normalized_remaining_moves
 
 def custom_score(game, player):
     if game.is_loser(player):
@@ -53,15 +54,16 @@ def custom_score(game, player):
     opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
     move_count = game.move_count
     remaining_moves = game.width*game.height - game.move_count
+    normalized_remaining_moves = remaining_moves/(game.width*game.height)
     location = game.get_player_location(player)
     center = (game.width//2, game.height//2)
 
-    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
-    survival_score = survival_heuristic(own_moves, remaining_moves)
-    positional_score = positional_heuristic(location, center, remaining_moves)
-    endgame_score = endgame_heuristic(game, player, move_count)
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, normalized_remaining_moves)
+    survival_score = survival_heuristic(own_moves, normalized_remaining_moves)
+    positional_score = positional_heuristic(location, center, normalized_remaining_moves)
+    endgame_score = endgame_heuristic(game, player, move_count, normalized_remaining_moves)
 
-    return lecture_score_improved + survival_score + endgame_score
+    return lecture_score_improved + survival_score + 2*endgame_score
     
 
 class CustomPlayer:

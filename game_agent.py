@@ -33,11 +33,13 @@ def positional_heuristic(location, center, remaining_moves):
 
 # too long --> timeout
 # check back to see what's wrong
-def endgame_heuristic(game, player):
+def endgame_heuristic(game, player, move_count):
+    if move_count < 30:
+        return 0
     count = 0
     for m in game.get_legal_moves(player):
         # note: can minus number of opponent moves
-        count += game.forecast_move(m).get_legal_moves(player)
+        count += len(game.forecast_move(m).get_legal_moves(player))
     return count
 
 def custom_score(game, player):
@@ -58,7 +60,7 @@ def custom_score(game, player):
     survival_score = survival_heuristic(own_moves, remaining_moves)
     positional_score = positional_heuristic(location, center, remaining_moves)
 
-    return lecture_score_improved + survival_score + positional_score
+    return lecture_score_improved + survival_score + endgame_heuristic
     
 
 class CustomPlayer:

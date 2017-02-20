@@ -14,6 +14,31 @@ class Timeout(Exception):
     """Subclass base exception for code clarity."""
     pass
 
+def lecture_heuristic(own_moves, opp_moves):
+    return float(own_moves - opp_moves)
+
+# penalize opp move harder and take into account remaining moves
+def lecture_heuristic_improved(own_moves, opp_moves, remaining_moves):
+    return (own_moves - 2*opp_moves)/remaining_moves
+
+# only cares about its own survival
+# red alert when remaining moves < 3
+def survival_heuristic(own_moves, remaining_moves):
+    return 3*(own_moves-3)/remaining_moves
+
+# prioritize moves closer to center at the beginning
+def positional_heuristic(location, center, remaining_moves):
+    distance = abs(location[0]-center[0])+abs(location[1]-center[1])
+    return remaining_moves/(distance*5) if distance is not 0 else float("inf")
+
+# too long --> timeout
+# check back to see what's wrong
+def endgame_heuristic(game, player):
+    count = 0
+    for m in game.get_legal_moves(player):
+        # note: can minus number of opponent moves
+        count += game.forecast_move(m).get_legal_moves(player)
+    return count
 
 def custom_score(game, player):
     if game.is_loser(player):
@@ -24,7 +49,17 @@ def custom_score(game, player):
 
     own_moves = len(game.get_legal_moves(player))
     opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
-    return float(2*own_moves - 3*opp_moves)
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
+    survival_score = survival_heuristic(own_moves, remaining_moves)
+    positional_score = positional_heuristic(location, center, remaining_moves)
+
+    return lecture_score_improved + survival_score + positional_score
+    
 
 class CustomPlayer:
     """Game-playing agent that chooses a move using your evaluation function

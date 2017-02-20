@@ -59,8 +59,9 @@ def custom_score(game, player):
     lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
     survival_score = survival_heuristic(own_moves, remaining_moves)
     positional_score = positional_heuristic(location, center, remaining_moves)
+    endgame_score = endgame_heuristic(game, player, move_count)
 
-    return lecture_score_improved + survival_score + endgame_heuristic
+    return lecture_score_improved + survival_score + endgame_score
     
 
 class CustomPlayer:

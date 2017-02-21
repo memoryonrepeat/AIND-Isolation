@@ -1,0 +1,586 @@
+[ec2-user@ip-172-31-37-134 AIND-Isolation]$ cat result.txt
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    normalized_remaining_moves = remaining_moves/(game.width*game.height)
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, normalized_remaining_moves)
+    survival_score = survival_heuristic(own_moves, normalized_remaining_moves)
+    positional_score = positional_heuristic(location, center, normalized_remaining_moves)
+    endgame_score = endgame_heuristic(game, player, move_count, normalized_remaining_moves)
+
+    return lecture_score_improved + survival_score + 2*endgame_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random    	Result: 18 to 2
+  Match 2: ID_Improved vs   MM_Null   	Result: 20 to 0
+  Match 3: ID_Improved vs   MM_Open   	Result: 16 to 4
+  Match 4: ID_Improved vs MM_Improved 	Result: 8 to 12
+  Match 5: ID_Improved vs   AB_Null   	Result: 17 to 3
+  Match 6: ID_Improved vs   AB_Open   	Result: 13 to 7
+  Match 7: ID_Improved vs AB_Improved 	Result: 14 to 6
+
+
+Results:
+----------
+ID_Improved         75.71%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random    	Result: 19 to 1
+  Match 2:   Student   vs   MM_Null   	Result: 19 to 1
+  Match 3:   Student   vs   MM_Open   	Result: 16 to 4
+  Match 4:   Student   vs MM_Improved 	Result: 17 to 3
+  Match 5:   Student   vs   AB_Null   	Result: 20 to 0
+  Match 6:   Student   vs   AB_Open   	Result: 18 to 2
+  Match 7:   Student   vs AB_Improved 	Result: 15 to 5
+
+
+Results:
+----------
+Student             88.57%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    normalized_remaining_moves = remaining_moves/(game.width*game.height)
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, normalized_remaining_moves)
+    survival_score = survival_heuristic(own_moves, normalized_remaining_moves)
+    positional_score = positional_heuristic(location, center, normalized_remaining_moves)
+    endgame_score = endgame_heuristic(game, player, move_count, normalized_remaining_moves)
+
+    return lecture_score_improved + survival_score + 2*endgame_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random    	Result: 38 to 2
+  Match 2: ID_Improved vs   MM_Null   	Result: 37 to 3
+  Match 3: ID_Improved vs   MM_Open   	Result: 33 to 7
+  Match 4: ID_Improved vs MM_Improved 	Result: 30 to 10
+  Match 5: ID_Improved vs   AB_Null   	Result: 38 to 2
+  Match 6: ID_Improved vs   AB_Open   	Result: 28 to 12
+  Match 7: ID_Improved vs AB_Improved 	Result: 35 to 5
+
+
+Results:
+----------
+ID_Improved         85.36%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random    	Result: 38 to 2
+  Match 2:   Student   vs   MM_Null   	Result: 40 to 0
+  Match 3:   Student   vs   MM_Open   	Result: 27 to 13
+  Match 4:   Student   vs MM_Improved 	Result: 33 to 7
+  Match 5:   Student   vs   AB_Null   	Result: 39 to 1
+  Match 6:   Student   vs   AB_Open   	Result: 36 to 4
+  Match 7:   Student   vs AB_Improved 	Result: 32 to 8
+
+
+Results:
+----------
+Student             87.50%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    normalized_remaining_moves = remaining_moves/(game.width*game.height)
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, normalized_remaining_moves)
+    survival_score = survival_heuristic(own_moves, normalized_remaining_moves)
+    positional_score = positional_heuristic(location, center, normalized_remaining_moves)
+    endgame_score = endgame_heuristic(game, player, move_count, normalized_remaining_moves)
+
+    return lecture_score_improved + 2*survival_score + 3*endgame_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random    	Result: 73 to 7
+  Match 2: ID_Improved vs   MM_Null   	Result: 75 to 5
+  Match 3: ID_Improved vs   MM_Open   	Result: 52 to 28
+  Match 4: ID_Improved vs MM_Improved 	Result: 57 to 23
+  Match 5: ID_Improved vs   AB_Null   	Result: 72 to 8
+  Match 6: ID_Improved vs   AB_Open   	Result: 56 to 24
+  Match 7: ID_Improved vs AB_Improved 	Result: 56 to 24
+
+
+Results:
+----------
+ID_Improved         78.75%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random    	Result: 78 to 2
+  Match 2:   Student   vs   MM_Null   	Result: 77 to 3
+  Match 3:   Student   vs   MM_Open   	Result: 67 to 13
+  Match 4:   Student   vs MM_Improved 	Result: 57 to 23
+  Match 5:   Student   vs   AB_Null   	Result: 78 to 2
+  Match 6:   Student   vs   AB_Open   	Result: 62 to 18
+  Match 7:   Student   vs AB_Improved 	Result: 71 to 9
+
+
+Results:
+----------
+Student             87.50%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    normalized_remaining_moves = remaining_moves/(game.width*game.height)
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, normalized_remaining_moves)
+    survival_score = survival_heuristic(own_moves, normalized_remaining_moves)
+    positional_score = positional_heuristic(location, center, normalized_remaining_moves)
+    endgame_score = endgame_heuristic(game, player, move_count, normalized_remaining_moves)
+
+    return lecture_score_improved + 2*survival_score + 3*endgame_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random    	Result: 76 to 4
+  Match 2: ID_Improved vs   MM_Null   	Result: 77 to 3
+  Match 3: ID_Improved vs   MM_Open   	Result: 53 to 27
+  Match 4: ID_Improved vs MM_Improved 	Result: 60 to 20
+  Match 5: ID_Improved vs   AB_Null   	Result: 78 to 2
+  Match 6: ID_Improved vs   AB_Open   	Result: 53 to 27
+  Match 7: ID_Improved vs AB_Improved 	Result: 56 to 24
+
+
+Results:
+----------
+ID_Improved         80.89%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random    	Result: 74 to 6
+  Match 2:   Student   vs   MM_Null   	Result: 79 to 1
+  Match 3:   Student   vs   MM_Open   	Result: 69 to 11
+  Match 4:   Student   vs MM_Improved 	Result: 62 to 18
+  Match 5:   Student   vs   AB_Null   	Result: 79 to 1
+  Match 6:   Student   vs   AB_Open   	Result: 67 to 13
+  Match 7:   Student   vs AB_Improved 	Result: 71 to 9
+
+
+Results:
+----------
+Student             89.46%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    normalized_remaining_moves = remaining_moves/(game.width*game.height)
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, normalized_remaining_moves)
+    survival_score = survival_heuristic(own_moves, normalized_remaining_moves)
+    positional_score = positional_heuristic(location, center, normalized_remaining_moves)
+    endgame_score = endgame_heuristic(game, player, move_count, normalized_remaining_moves)
+
+    return lecture_score_improved + 2*survival_score + 3*endgame_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random    	Result: 189 to 11
+  Match 2: ID_Improved vs   MM_Null   	Result: 192 to 8
+  Match 3: ID_Improved vs   MM_Open   	Result: 141 to 59
+  Match 4: ID_Improved vs MM_Improved 	Result: 139 to 61
+  Match 5: ID_Improved vs   AB_Null   	Result: 189 to 11
+  Match 6: ID_Improved vs   AB_Open   	Result: 138 to 62
+  Match 7: ID_Improved vs AB_Improved 	Result: 146 to 54
+
+
+Results:
+----------
+ID_Improved         81.00%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random    	Result: 188 to 12
+  Match 2:   Student   vs   MM_Null   	Result: 191 to 9
+  Match 3:   Student   vs   MM_Open   	Result: 174 to 26
+  Match 4:   Student   vs MM_Improved 	Result: 173 to 27
+  Match 5:   Student   vs   AB_Null   	Result: 195 to 5
+  Match 6:   Student   vs   AB_Open   	Result: 149 to 51
+  Match 7:   Student   vs AB_Improved 	Result: 162 to 38
+
+
+Results:
+----------
+Student             88.00%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    normalized_remaining_moves = remaining_moves/(game.width*game.height)
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, normalized_remaining_moves)
+    survival_score = survival_heuristic(own_moves, normalized_remaining_moves)
+    positional_score = positional_heuristic(location, center, normalized_remaining_moves)
+    endgame_score = endgame_heuristic(game, player, move_count, normalized_remaining_moves)
+
+    return lecture_score_improved
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random    	Result: 76 to 4
+  Match 2: ID_Improved vs   MM_Null   	Result: 77 to 3
+  Match 3: ID_Improved vs   MM_Open   	Result: 63 to 17
+  Match 4: ID_Improved vs MM_Improved 	Result: 58 to 22
+  Match 5: ID_Improved vs   AB_Null   	Result: 77 to 3
+  Match 6: ID_Improved vs   AB_Open   	Result: 57 to 23
+  Match 7: ID_Improved vs AB_Improved 	Result: 51 to 29
+
+
+Results:
+----------
+ID_Improved         81.96%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random    	Result: 76 to 4
+  Match 2:   Student   vs   MM_Null   	Result: 79 to 1
+  Match 3:   Student   vs   MM_Open   	Result: 59 to 21
+  Match 4:   Student   vs MM_Improved 	Result: 58 to 22
+  Match 5:   Student   vs   AB_Null   	Result: 76 to 4
+  Match 6:   Student   vs   AB_Open   	Result: 55 to 25
+  Match 7:   Student   vs AB_Improved 	Result: 56 to 24
+
+
+Results:
+----------
+Student             81.96%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    normalized_remaining_moves = remaining_moves/(game.width*game.height)
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, normalized_remaining_moves)
+    survival_score = survival_heuristic(own_moves, normalized_remaining_moves)
+    positional_score = positional_heuristic(location, center, normalized_remaining_moves)
+    endgame_score = endgame_heuristic(game, player, move_count, normalized_remaining_moves)
+
+    return endgame_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random    	Result: 74 to 6
+  Match 2: ID_Improved vs   MM_Null   	Result: 75 to 5
+  Match 3: ID_Improved vs   MM_Open   	Result: 53 to 27
+  Match 4: ID_Improved vs MM_Improved 	Result: 50 to 30
+  Match 5: ID_Improved vs   AB_Null   	Result: 77 to 3
+  Match 6: ID_Improved vs   AB_Open   	Result: 51 to 29
+  Match 7: ID_Improved vs AB_Improved 	Result: 62 to 18
+
+
+Results:
+----------
+ID_Improved         78.93%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random    	Result: 42 to 38
+  Match 2:   Student   vs   MM_Null   	Result: 47 to 33
+  Match 3:   Student   vs   MM_Open   	Result: 22 to 58
+  Match 4:   Student   vs MM_Improved 	Result: 27 to 53
+  Match 5:   Student   vs   AB_Null   	Result: 48 to 32
+  Match 6:   Student   vs   AB_Open   	Result: 30 to 50
+  Match 7:   Student   vs AB_Improved 	Result: 33 to 47
+
+
+Results:
+----------
+Student             44.46%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    normalized_remaining_moves = remaining_moves/(game.width*game.height)
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, normalized_remaining_moves)
+    survival_score = survival_heuristic(own_moves, normalized_remaining_moves)
+    positional_score = positional_heuristic(location, center, normalized_remaining_moves)
+    endgame_score = endgame_heuristic(game, player, move_count, normalized_remaining_moves)
+
+    return lecture_score_improved + survival_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random    	Result: 38 to 2
+  Match 2: ID_Improved vs   MM_Null   	Result: 37 to 3
+  Match 3: ID_Improved vs   MM_Open   	Result: 28 to 12
+  Match 4: ID_Improved vs MM_Improved 	Result: 30 to 10
+  Match 5: ID_Improved vs   AB_Null   	Result: 38 to 2
+  Match 6: ID_Improved vs   AB_Open   	Result: 30 to 10
+  Match 7: ID_Improved vs AB_Improved 	Result: 30 to 10
+
+
+Results:
+----------
+ID_Improved         82.50%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random    	Result: 39 to 1
+  Match 2:   Student   vs   MM_Null   	Result: 40 to 0
+  Match 3:   Student   vs   MM_Open   	Result: 27 to 13
+  Match 4:   Student   vs MM_Improved 	Result: 34 to 6
+  Match 5:   Student   vs   AB_Null   	Result: 39 to 1
+  Match 6:   Student   vs   AB_Open   	Result: 34 to 6
+  Match 7:   Student   vs AB_Improved 	Result: 35 to 5
+
+
+Results:
+----------
+Student             88.57%
+[ec2-user@ip-172-31-37-134 AIND-Isolation]$

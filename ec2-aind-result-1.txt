@@ -1,0 +1,1935 @@
+[ec2-user@ip-172-31-17-119 AIND-Isolation]$ cat result.txt
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    return float(2*own_moves - 3*opp_moves)
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random    	Result: 20 to 0
+  Match 2: ID_Improved vs   MM_Null   	Result: 20 to 0
+  Match 3: ID_Improved vs   MM_Open   	Result: 16 to 4
+  Match 4: ID_Improved vs MM_Improved 	Result: 16 to 4
+  Match 5: ID_Improved vs   AB_Null   	Result: 18 to 2
+  Match 6: ID_Improved vs   AB_Open   	Result: 17 to 3
+  Match 7: ID_Improved vs AB_Improved 	Result: 13 to 7
+
+
+Results:
+----------
+ID_Improved         85.71%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random    	Result: 16 to 4
+  Match 2:   Student   vs   MM_Null   	Result: 18 to 2
+  Match 3:   Student   vs   MM_Open   	Result: 16 to 4
+  Match 4:   Student   vs MM_Improved 	Result: 15 to 5
+  Match 5:   Student   vs   AB_Null   	Result: 19 to 1
+  Match 6:   Student   vs   AB_Open   	Result: 19 to 1
+  Match 7:   Student   vs AB_Improved 	Result: 15 to 5
+
+
+Results:
+----------
+Student             84.29%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
+    survival_score = survival_heuristic(own_moves, remaining_moves)
+    positional_score = positional_heuristic(location, center, remaining_moves)
+
+    return lecture_score_improved + survival_score + positional_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random    	Result: 20 to 0
+  Match 2: ID_Improved vs   MM_Null   	Result: 19 to 1
+  Match 3: ID_Improved vs   MM_Open   	Result: 13 to 7
+  Match 4: ID_Improved vs MM_Improved 	Result: 14 to 6
+  Match 5: ID_Improved vs   AB_Null   	Result: 18 to 2
+  Match 6: ID_Improved vs   AB_Open   	Result: 15 to 5
+  Match 7: ID_Improved vs AB_Improved 	Result: 15 to 5
+
+
+Results:
+----------
+ID_Improved         81.43%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random    	Result: 19 to 1
+  Match 2:   Student   vs   MM_Null   	Result: 19 to 1
+  Match 3:   Student   vs   MM_Open   	Result: 18 to 2
+  Match 4:   Student   vs MM_Improved 	Result: 16 to 4
+  Match 5:   Student   vs   AB_Null   	Result: 18 to 2
+  Match 6:   Student   vs   AB_Open   	Result: 18 to 2
+  Match 7:   Student   vs AB_Improved 	Result: 18 to 2
+
+
+Results:
+----------
+Student             90.00%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
+    survival_score = survival_heuristic(own_moves, remaining_moves)
+    positional_score = positional_heuristic(location, center, remaining_moves)
+
+    return lecture_score_improved + survival_score + positional_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random    	Result: 19 to 1
+  Match 2: ID_Improved vs   MM_Null   	Result: 20 to 0
+  Match 3: ID_Improved vs   MM_Open   	Result: 13 to 7
+  Match 4: ID_Improved vs MM_Improved 	Result: 15 to 5
+  Match 5: ID_Improved vs   AB_Null   	Result: 19 to 1
+  Match 6: ID_Improved vs   AB_Open   	Result: 13 to 7
+  Match 7: ID_Improved vs AB_Improved 	Result: 13 to 7
+
+
+Results:
+----------
+ID_Improved         80.00%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random    	Result: 20 to 0
+  Match 2:   Student   vs   MM_Null   	Result: 19 to 1
+  Match 3:   Student   vs   MM_Open   	Result: 16 to 4
+  Match 4:   Student   vs MM_Improved 	Result: 16 to 4
+  Match 5:   Student   vs   AB_Null   	Result: 20 to 0
+  Match 6:   Student   vs   AB_Open   	Result: 18 to 2
+  Match 7:   Student   vs AB_Improved 	Result: 15 to 5
+
+
+Results:
+----------
+Student             88.57%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
+    survival_score = survival_heuristic(own_moves, remaining_moves)
+    positional_score = positional_heuristic(location, center, remaining_moves)
+
+    return survival_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random    	Result: 18 to 2
+  Match 2: ID_Improved vs   MM_Null   	Result: 19 to 1
+  Match 3: ID_Improved vs   MM_Open   	Result: 15 to 5
+  Match 4: ID_Improved vs MM_Improved 	Result: 12 to 8
+  Match 5: ID_Improved vs   AB_Null   	Result: 19 to 1
+  Match 6: ID_Improved vs   AB_Open   	Result: 13 to 7
+  Match 7: ID_Improved vs AB_Improved 	Result: 14 to 6
+
+
+Results:
+----------
+ID_Improved         78.57%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random    	Result: 19 to 1
+  Match 2:   Student   vs   MM_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1 ; <game_agent.CustomPlayer object at 0x7f82bf952c50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952c50>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952c50>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 2
+	Result: 16 to 4
+  Match 3:   Student   vs   MM_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f82bf952cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1 ; <game_agent.CustomPlayer object at 0x7f82bf952cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f82bf952cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f82bf952cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f82bf952cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952cc0>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952cc0>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952cc0>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952cc0>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 2
+	Result: 4 to 16
+  Match 4:   Student   vs MM_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1 ; <game_agent.CustomPlayer object at 0x7f82bf952d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1 ; <game_agent.CustomPlayer object at 0x7f82bf952d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1 ; <game_agent.CustomPlayer object at 0x7f82bf952d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1 ; <game_agent.CustomPlayer object at 0x7f82bf952d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952d30>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952d30>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952d30>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1
+	Result: 10 to 10
+  Match 5:   Student   vs   AB_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1 ; <game_agent.CustomPlayer object at 0x7f82bf952d68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1 ; <game_agent.CustomPlayer object at 0x7f82bf952d68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952d68>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952d68>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952d68>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1
+	Result: 13 to 7
+  Match 6:   Student   vs   AB_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f82bf952dd8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f82bf952dd8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f82bf952dd8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1 ; <game_agent.CustomPlayer object at 0x7f82bf952dd8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f82bf952dd8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952dd8>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952dd8>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952dd8>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952dd8>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1
+	Result: 4 to 16
+  Match 7:   Student   vs AB_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1 ; <game_agent.CustomPlayer object at 0x7f82bf952e48>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1 ; <game_agent.CustomPlayer object at 0x7f82bf952e48>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1 ; <game_agent.CustomPlayer object at 0x7f82bf952e48>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952e48>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952e48>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f82bf952e48>: 0 ; <game_agent.CustomPlayer object at 0x7f82bf952eb8>: 1
+	Result: 7 to 13
+
+
+Results:
+----------
+Student             52.14%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
+    survival_score = survival_heuristic(own_moves, remaining_moves)
+    positional_score = positional_heuristic(location, center, remaining_moves)
+
+    return survival_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2 ; <sample_players.RandomPlayer object at 0x7fd823440b70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1 ; <sample_players.RandomPlayer object at 0x7fd823440b70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1 ; <sample_players.RandomPlayer object at 0x7fd823440b70>: 0
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd823440b70>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd823440b70>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd823440b70>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd823440b70>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd823440b70>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1
+	Result: 9 to 11
+  Match 2: ID_Improved vs   MM_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440ba8>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440ba8>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440ba8>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1
+	Result: 10 to 10
+  Match 3: ID_Improved vs   MM_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c18>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c18>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c18>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c18>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c18>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+	Result: 4 to 16
+  Match 4: ID_Improved vs MM_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c88>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c88>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c88>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c88>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c88>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+	Result: 2 to 18
+  Match 5: ID_Improved vs   AB_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+	Result: 6 to 14
+  Match 6: ID_Improved vs   AB_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440d30>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440d30>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440d30>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440d30>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440d30>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+	Result: 2 to 18
+  Match 7: ID_Improved vs AB_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440da0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440da0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440da0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440da0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440da0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440dd8>: 2
+	Result: 3 to 17
+
+
+Results:
+----------
+ID_Improved         25.71%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 2 ; <sample_players.RandomPlayer object at 0x7fd823440b70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 2 ; <sample_players.RandomPlayer object at 0x7fd823440b70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 2 ; <sample_players.RandomPlayer object at 0x7fd823440b70>: 0
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd823440b70>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd823440b70>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd823440b70>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd823440b70>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 2
+	Result: 6 to 14
+  Match 2:   Student   vs   MM_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440ba8>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440ba8>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440ba8>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440ba8>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 2
+	Result: 7 to 13
+  Match 3:   Student   vs   MM_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c18>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c18>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c18>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c18>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 1
+	Result: 6 to 14
+  Match 4:   Student   vs MM_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c88>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c88>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c88>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c88>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440c88>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 2
+	Result: 4 to 16
+  Match 5:   Student   vs   AB_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440cc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 1
+	Result: 6 to 14
+  Match 6:   Student   vs   AB_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440d30>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440d30>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440d30>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440d30>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440d30>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 2
+	Result: 4 to 16
+  Match 7:   Student   vs AB_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 2 ; <game_agent.CustomPlayer object at 0x7fd823440da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440e10>: 1 ; <game_agent.CustomPlayer object at 0x7fd823440da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440da0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440da0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440da0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440da0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd823440da0>: 0 ; <game_agent.CustomPlayer object at 0x7fd823440e10>: 2
+	Result: 2 to 18
+
+
+Results:
+----------
+Student             25.00%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
+    survival_score = survival_heuristic(own_moves, remaining_moves)
+    positional_score = positional_heuristic(location, center, remaining_moves)
+
+    return survival_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 1 ; <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+	Result: 3 to 17
+  Match 2: ID_Improved vs   MM_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+	Result: 0 to 20
+  Match 3: ID_Improved vs   MM_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+	Result: 0 to 20
+  Match 4: ID_Improved vs MM_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+	Result: 0 to 20
+  Match 5: ID_Improved vs   AB_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+	Result: 0 to 20
+  Match 6: ID_Improved vs   AB_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+	Result: 0 to 20
+  Match 7: ID_Improved vs AB_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37dd8>: 2
+	Result: 0 to 20
+
+
+Results:
+----------
+ID_Improved          2.14%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f7bfed37b70>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+	Result: 0 to 20
+  Match 2:   Student   vs   MM_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37ba8>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+	Result: 0 to 20
+  Match 3:   Student   vs   MM_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c18>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+	Result: 0 to 20
+  Match 4:   Student   vs MM_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37c88>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+	Result: 0 to 20
+  Match 5:   Student   vs   AB_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37cc0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+	Result: 0 to 20
+  Match 6:   Student   vs   AB_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37d30>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+	Result: 0 to 20
+  Match 7:   Student   vs AB_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2 ; <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f7bfed37da0>: 0 ; <game_agent.CustomPlayer object at 0x7f7bfed37e10>: 2
+	Result: 0 to 20
+
+
+Results:
+----------
+Student              0.00%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
+    survival_score = survival_heuristic(own_moves, remaining_moves)
+    positional_score = positional_heuristic(location, center, remaining_moves)
+
+    return lecture_score_improved + survival_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+	Result: 0 to 20
+  Match 2: ID_Improved vs   MM_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+	Result: 0 to 20
+  Match 3: ID_Improved vs   MM_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+	Result: 0 to 20
+  Match 4: ID_Improved vs MM_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+	Result: 0 to 20
+  Match 5: ID_Improved vs   AB_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+	Result: 0 to 20
+  Match 6: ID_Improved vs   AB_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+	Result: 0 to 20
+  Match 7: ID_Improved vs AB_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefe80>: 2
+	Result: 0 to 20
+
+
+Results:
+----------
+ID_Improved          0.00%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fe227cefc18>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+	Result: 0 to 20
+  Match 2:   Student   vs   MM_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefc50>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+	Result: 0 to 20
+  Match 3:   Student   vs   MM_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefcc0>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+	Result: 0 to 20
+  Match 4:   Student   vs MM_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd30>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+	Result: 0 to 20
+  Match 5:   Student   vs   AB_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefd68>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+	Result: 0 to 20
+  Match 6:   Student   vs   AB_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefdd8>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+	Result: 0 to 20
+  Match 7:   Student   vs AB_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2 ; <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fe227cefe48>: 0 ; <game_agent.CustomPlayer object at 0x7fe227cefeb8>: 2
+	Result: 0 to 20
+
+
+Results:
+----------
+Student              0.00%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
+    survival_score = survival_heuristic(own_moves, remaining_moves)
+    positional_score = positional_heuristic(location, center, remaining_moves)
+
+    return lecture_score_improved + survival_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+	Result: 0 to 20
+  Match 2: ID_Improved vs   MM_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+	Result: 0 to 20
+  Match 3: ID_Improved vs   MM_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+	Result: 0 to 20
+  Match 4: ID_Improved vs MM_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+	Result: 0 to 20
+  Match 5: ID_Improved vs   AB_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+	Result: 0 to 20
+  Match 6: ID_Improved vs   AB_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+	Result: 0 to 20
+  Match 7: ID_Improved vs AB_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aedd8>: 2
+	Result: 0 to 20
+
+
+Results:
+----------
+ID_Improved          0.00%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fd99d2aeb70>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+	Result: 0 to 20
+  Match 2:   Student   vs   MM_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeba8>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+	Result: 0 to 20
+  Match 3:   Student   vs   MM_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec18>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+	Result: 0 to 20
+  Match 4:   Student   vs MM_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aec88>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+	Result: 0 to 20
+  Match 5:   Student   vs   AB_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aecc0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+	Result: 0 to 20
+  Match 6:   Student   vs   AB_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aed30>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+	Result: 0 to 20
+  Match 7:   Student   vs AB_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2 ; <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fd99d2aeda0>: 0 ; <game_agent.CustomPlayer object at 0x7fd99d2aee10>: 2
+	Result: 0 to 20
+
+
+Results:
+----------
+Student              0.00%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
+    survival_score = survival_heuristic(own_moves, remaining_moves)
+    positional_score = positional_heuristic(location, center, remaining_moves)
+
+    return lecture_score_improved + survival_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fedd4f55dd8>: 1 ; <sample_players.RandomPlayer object at 0x7fedd4f55b70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fedd4f55dd8>: 1 ; <sample_players.RandomPlayer object at 0x7fedd4f55b70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fedd4f55dd8>: 1 ; <sample_players.RandomPlayer object at 0x7fedd4f55b70>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fedd4f55dd8>: 1 ; <sample_players.RandomPlayer object at 0x7fedd4f55b70>: 0
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fedd4f55b70>: 0 ; <game_agent.CustomPlayer object at 0x7fedd4f55dd8>: 1
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fedd4f55b70>: 0 ; <game_agent.CustomPlayer object at 0x7fedd4f55dd8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fedd4f55b70>: 0 ; <game_agent.CustomPlayer object at 0x7fedd4f55dd8>: 1
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fedd4f55b70>: 0 ; <game_agent.CustomPlayer object at 0x7fedd4f55dd8>: 1
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fedd4f55b70>: 0 ; <game_agent.CustomPlayer object at 0x7fedd4f55dd8>: 1
+	Result: 10 to 10
+  Match 2: ID_Improved vs   MM_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fedd4f55dd8>: 1 ; <game_agent.CustomPlayer object at 0x7fedd4f55ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fedd4f55dd8>: 1 ; <game_agent.CustomPlayer object at 0x7fedd4f55ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fedd4f55dd8>: 1 ; <game_agent.CustomPlayer object at 0x7fedd4f55ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fedd4f55dd8>: 1 ; <game_agent.CustomPlayer object at 0x7fedd4f55ba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fedd4f55ba8>: 0 ; <game_agent.CustomPlayer object at 0x7fedd4f55dd8>: 1
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
+    survival_score = survival_heuristic(own_moves, remaining_moves)
+    positional_score = positional_heuristic(location, center, remaining_moves)
+
+    return lecture_score_improved + survival_score + endgame_heuristic
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fb0ae524c50>: 0 ; <game_agent.CustomPlayer object at 0x7fb0ae524eb8>: 1
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fb0ae524c50>: 0 ; <game_agent.CustomPlayer object at 0x7fb0ae524eb8>: 1
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fb0ae524c50>: 0 ; <game_agent.CustomPlayer object at 0x7fb0ae524eb8>: 1
+	Result: 16 to 4
+  Match 2: ID_Improved vs   MM_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fb0ae524eb8>: 1 ; <game_agent.CustomPlayer object at 0x7fb0ae524c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fb0ae524eb8>: 1 ; <game_agent.CustomPlayer object at 0x7fb0ae524c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fb0ae524eb8>: 1 ; <game_agent.CustomPlayer object at 0x7fb0ae524c88>: 0
+	Result: 16 to 4
+  Match 3: ID_Improved vs   MM_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fb0ae524eb8>: 1 ; <game_agent.CustomPlayer object at 0x7fb0ae524cf8>: 0
+	Result: 10 to 10
+  Match 4: ID_Improved vs MM_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fb0ae524d68>: 0 ; <game_agent.CustomPlayer object at 0x7fb0ae524eb8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fb0ae524d68>: 0 ; <game_agent.CustomPlayer object at 0x7fb0ae524eb8>: 1
+	Result: 13 to 7
+  Match 5: ID_Improved vs   AB_Null   	Result: 20 to 0
+  Match 6: ID_Improved vs   AB_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fb0ae524e10>: 0 ; <game_agent.CustomPlayer object at 0x7fb0ae524eb8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fb0ae524e10>: 0 ; <game_agent.CustomPlayer object at 0x7fb0ae524eb8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fb0ae524e10>: 0 ; <game_agent.CustomPlayer object at 0x7fb0ae524eb8>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fb0ae524e10>: 0 ; <game_agent.CustomPlayer object at 0x7fb0ae524eb8>: 1
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
+    survival_score = survival_heuristic(own_moves, remaining_moves)
+    positional_score = positional_heuristic(location, center, remaining_moves)
+    endgame_score = endgame_heuristic(game, player, move_count)
+
+    return lecture_score_improved + survival_score + endgame_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f694090eeb8>: 1 ; <sample_players.RandomPlayer object at 0x7f694090ec50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f694090eeb8>: 1 ; <sample_players.RandomPlayer object at 0x7f694090ec50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f694090eeb8>: 1 ; <sample_players.RandomPlayer object at 0x7f694090ec50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f694090eeb8>: 2 ; <sample_players.RandomPlayer object at 0x7f694090ec50>: 0
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f694090ec50>: 0 ; <game_agent.CustomPlayer object at 0x7f694090eeb8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f694090ec50>: 0 ; <game_agent.CustomPlayer object at 0x7f694090eeb8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f694090ec50>: 0 ; <game_agent.CustomPlayer object at 0x7f694090eeb8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f694090ec50>: 0 ; <game_agent.CustomPlayer object at 0x7f694090eeb8>: 1
+	Result: 8 to 12
+  Match 2: ID_Improved vs   MM_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f694090eeb8>: 2 ; <game_agent.CustomPlayer object at 0x7f694090ec88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f694090eeb8>: 1 ; <game_agent.CustomPlayer object at 0x7f694090ec88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f694090eeb8>: 2 ; <game_agent.CustomPlayer object at 0x7f694090ec88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f694090ec88>: 0 ; <game_agent.CustomPlayer object at 0x7f694090eeb8>: 1
+[ec2-user@ip-172-31-17-119 AIND-Isolation]$

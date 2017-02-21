@@ -1,0 +1,831 @@
+[ec2-user@ip-172-31-30-123 AIND-Isolation]$ cat result.txt
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
+    survival_score = survival_heuristic(own_moves, remaining_moves)
+    positional_score = positional_heuristic(location, center, remaining_moves)
+
+    return lecture_score_improved + survival_score + positional_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random    	Result: 20 to 0
+  Match 2: ID_Improved vs   MM_Null   	Result: 19 to 1
+  Match 3: ID_Improved vs   MM_Open   	Result: 15 to 5
+  Match 4: ID_Improved vs MM_Improved 	Result: 14 to 6
+  Match 5: ID_Improved vs   AB_Null   	Result: 19 to 1
+  Match 6: ID_Improved vs   AB_Open   	Result: 19 to 1
+  Match 7: ID_Improved vs AB_Improved 	Result: 13 to 7
+
+
+Results:
+----------
+ID_Improved         85.00%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random    	Result: 18 to 2
+  Match 2:   Student   vs   MM_Null   	Result: 19 to 1
+  Match 3:   Student   vs   MM_Open   	Result: 15 to 5
+  Match 4:   Student   vs MM_Improved 	Result: 15 to 5
+  Match 5:   Student   vs   AB_Null   	Result: 20 to 0
+  Match 6:   Student   vs   AB_Open   	Result: 17 to 3
+  Match 7:   Student   vs AB_Improved 	Result: 17 to 3
+
+
+Results:
+----------
+Student             86.43%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
+    survival_score = survival_heuristic(own_moves, remaining_moves)
+    positional_score = positional_heuristic(location, center, remaining_moves)
+
+    return positional_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random    	Result: 19 to 1
+  Match 2: ID_Improved vs   MM_Null   	Result: 18 to 2
+  Match 3: ID_Improved vs   MM_Open   	Result: 13 to 7
+  Match 4: ID_Improved vs MM_Improved 	Result: 13 to 7
+  Match 5: ID_Improved vs   AB_Null   	Result: 19 to 1
+  Match 6: ID_Improved vs   AB_Open   	Result: 13 to 7
+  Match 7: ID_Improved vs AB_Improved 	Result: 13 to 7
+
+
+Results:
+----------
+ID_Improved         77.14%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random    	Result: 17 to 3
+  Match 2:   Student   vs   MM_Null   	Result: 18 to 2
+  Match 3:   Student   vs   MM_Open   	Result: 14 to 6
+  Match 4:   Student   vs MM_Improved 	Result: 19 to 1
+  Match 5:   Student   vs   AB_Null   	Result: 19 to 1
+  Match 6:   Student   vs   AB_Open   	Result: 12 to 8
+  Match 7:   Student   vs AB_Improved 	Result: 14 to 6
+
+
+Results:
+----------
+Student             80.71%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
+    survival_score = survival_heuristic(own_moves, remaining_moves)
+    positional_score = positional_heuristic(location, center, remaining_moves)
+
+    return positional_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random    	Result: 20 to 0
+  Match 2: ID_Improved vs   MM_Null   	Result: 18 to 2
+  Match 3: ID_Improved vs   MM_Open   	Result: 16 to 4
+  Match 4: ID_Improved vs MM_Improved 	Result: 16 to 4
+  Match 5: ID_Improved vs   AB_Null   	Result: 18 to 2
+  Match 6: ID_Improved vs   AB_Open   	Result: 12 to 8
+  Match 7: ID_Improved vs AB_Improved 	Result: 13 to 7
+
+
+Results:
+----------
+ID_Improved         80.71%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random    	Result: 19 to 1
+  Match 2:   Student   vs   MM_Null   	Result: 19 to 1
+  Match 3:   Student   vs   MM_Open   	Result: 15 to 5
+  Match 4:   Student   vs MM_Improved 	Result: 16 to 4
+  Match 5:   Student   vs   AB_Null   	Result: 19 to 1
+  Match 6:   Student   vs   AB_Open   	Result: 15 to 5
+  Match 7:   Student   vs AB_Improved 	Result: 14 to 6
+
+
+Results:
+----------
+Student             83.57%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
+    survival_score = survival_heuristic(own_moves, remaining_moves)
+    positional_score = positional_heuristic(location, center, remaining_moves)
+
+    return lecture_score_improved + survival_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random    	Result: 20 to 0
+  Match 2: ID_Improved vs   MM_Null   	Result: 20 to 0
+  Match 3: ID_Improved vs   MM_Open   	Result: 12 to 8
+  Match 4: ID_Improved vs MM_Improved 	Result: 12 to 8
+  Match 5: ID_Improved vs   AB_Null   	Result: 18 to 2
+  Match 6: ID_Improved vs   AB_Open   	Result: 14 to 6
+  Match 7: ID_Improved vs AB_Improved 	Result: 10 to 10
+
+
+Results:
+----------
+ID_Improved         75.71%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random    	Result: 18 to 2
+  Match 2:   Student   vs   MM_Null   	Result: 19 to 1
+  Match 3:   Student   vs   MM_Open   	Result: 17 to 3
+  Match 4:   Student   vs MM_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f5d2790ae80>: 1 ; <game_agent.CustomPlayer object at 0x7f5d2790acf8>: 0
+	Result: 14 to 6
+  Match 5:   Student   vs   AB_Null   	Result: 19 to 1
+  Match 6:   Student   vs   AB_Open   	Result: 16 to 4
+  Match 7:   Student   vs AB_Improved 	Result: 15 to 5
+
+
+Results:
+----------
+Student             84.29%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
+    survival_score = survival_heuristic(own_moves, remaining_moves)
+    positional_score = positional_heuristic(location, center, remaining_moves)
+
+    return lecture_score_improved + survival_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random    	Result: 19 to 1
+  Match 2: ID_Improved vs   MM_Null   	Result: 19 to 1
+  Match 3: ID_Improved vs   MM_Open   	Result: 13 to 7
+  Match 4: ID_Improved vs MM_Improved 	Result: 18 to 2
+  Match 5: ID_Improved vs   AB_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcd68>: 1 ; <game_agent.CustomPlayer object at 0x7f08c7dbcc50>: 0
+	Result: 18 to 2
+  Match 6: ID_Improved vs   AB_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbccc0>: 0 ; <game_agent.CustomPlayer object at 0x7f08c7dbcd68>: 1
+	Result: 14 to 6
+  Match 7: ID_Improved vs AB_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcd30>: 0 ; <game_agent.CustomPlayer object at 0x7f08c7dbcd68>: 1
+	Result: 14 to 6
+
+
+Results:
+----------
+ID_Improved         82.14%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 1 ; <sample_players.RandomPlayer object at 0x7f08c7dbcb00>: 0
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f08c7dbcb00>: 0 ; <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 1
+	Result: 18 to 2
+  Match 2:   Student   vs   MM_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 1 ; <game_agent.CustomPlayer object at 0x7f08c7dbcb38>: 0
+	Result: 18 to 2
+  Match 3:   Student   vs   MM_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 1 ; <game_agent.CustomPlayer object at 0x7f08c7dbcba8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcba8>: 0 ; <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 1
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcba8>: 0 ; <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 1
+	Result: 14 to 6
+  Match 4:   Student   vs MM_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 1 ; <game_agent.CustomPlayer object at 0x7f08c7dbcc18>: 0
+	Result: 16 to 4
+  Match 5:   Student   vs   AB_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcc50>: 0 ; <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 1
+	Result: 19 to 1
+  Match 6:   Student   vs   AB_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 1 ; <game_agent.CustomPlayer object at 0x7f08c7dbccc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 1 ; <game_agent.CustomPlayer object at 0x7f08c7dbccc0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbccc0>: 0 ; <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 1
+	Result: 16 to 4
+  Match 7:   Student   vs AB_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 2 ; <game_agent.CustomPlayer object at 0x7f08c7dbcd30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 2 ; <game_agent.CustomPlayer object at 0x7f08c7dbcd30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 2 ; <game_agent.CustomPlayer object at 0x7f08c7dbcd30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 2 ; <game_agent.CustomPlayer object at 0x7f08c7dbcd30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 2 ; <game_agent.CustomPlayer object at 0x7f08c7dbcd30>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcd30>: 0 ; <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcd30>: 0 ; <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcd30>: 0 ; <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcd30>: 0 ; <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f08c7dbcd30>: 0 ; <game_agent.CustomPlayer object at 0x7f08c7dbcda0>: 2
+	Result: 0 to 20
+
+
+Results:
+----------
+Student             72.14%
+
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
+    survival_score = survival_heuristic(own_moves, remaining_moves)
+    positional_score = positional_heuristic(location, center, remaining_moves)
+
+    return lecture_score_improved + survival_score + endgame_heuristic
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <sample_players.RandomPlayer object at 0x7fc88146fc50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <sample_players.RandomPlayer object at 0x7fc88146fc50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <sample_players.RandomPlayer object at 0x7fc88146fc50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <sample_players.RandomPlayer object at 0x7fc88146fc50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <sample_players.RandomPlayer object at 0x7fc88146fc50>: 0
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fc88146fc50>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fc88146fc50>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fc88146fc50>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fc88146fc50>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7fc88146fc50>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+	Result: 0 to 20
+  Match 2: ID_Improved vs   MM_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fc88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fc88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fc88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fc88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fc88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fc88>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fc88>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fc88>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fc88>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fc88>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+	Result: 0 to 20
+  Match 3: ID_Improved vs   MM_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fcf8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fcf8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fcf8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fcf8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fcf8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fcf8>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fcf8>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fcf8>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fcf8>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fcf8>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+	Result: 0 to 20
+  Match 4: ID_Improved vs MM_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fd68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fd68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fd68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fd68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fd68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fd68>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fd68>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fd68>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fd68>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fd68>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+	Result: 0 to 20
+  Match 5: ID_Improved vs   AB_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fda0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fda0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fda0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fda0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fda0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fda0>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fda0>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fda0>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fda0>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fda0>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+	Result: 0 to 20
+  Match 6: ID_Improved vs   AB_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fe10>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fe10>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fe10>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fe10>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fe10>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fe10>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fe10>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fe10>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fe10>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fe10>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+	Result: 0 to 20
+  Match 7: ID_Improved vs AB_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fe80>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fe80>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fe80>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fe80>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2 ; <game_agent.CustomPlayer object at 0x7fc88146fe80>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fe80>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fe80>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fe80>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fe80>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7fc88146fe80>: 0 ; <game_agent.CustomPlayer object at 0x7fc88146feb8>: 2
+	Result: 0 to 20
+
+
+Results:
+----------
+ID_Improved          0.00%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random
+
+########## NEW TOURNAMENT BEGINS ##########
+This script evaluates the performance of the custom heuristic function by
+comparing the strength of an agent using iterative deepening (ID) search with
+alpha-beta pruning against the strength rating of agents using other heuristic
+functions.  The `ID_Improved` agent provides a baseline by measuring the
+performance of a basic agent using Iterative Deepening and the "improved"
+heuristic (from lecture) on your hardware.  The `Student` agent then measures
+the performance of Iterative Deepening and the custom heuristic against the
+same opponents.
+###########################################
+
+def custom_score(game, player):
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    move_count = game.move_count
+    remaining_moves = game.width*game.height - game.move_count
+    location = game.get_player_location(player)
+    center = (game.width//2, game.height//2)
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, remaining_moves)
+    survival_score = survival_heuristic(own_moves, remaining_moves)
+    positional_score = positional_heuristic(location, center, remaining_moves)
+    endgame_score = endgame_heuristic(game, player, move_count)
+
+    return lecture_score_improved + survival_score + endgame_score
+
+
+*************************
+ Evaluating: ID_Improved
+*************************
+
+Playing Matches:
+----------
+  Match 1: ID_Improved vs   Random
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+	Result: 0 to 20
+  Match 2: ID_Improved vs   MM_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1c88>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1c88>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1c88>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1c88>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1c88>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+	Result: 0 to 20
+  Match 3: ID_Improved vs   MM_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1cf8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1cf8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1cf8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1cf8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1cf8>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1cf8>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1cf8>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1cf8>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1cf8>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1cf8>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+	Result: 0 to 20
+  Match 4: ID_Improved vs MM_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1d68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1d68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1d68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1d68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1d68>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1d68>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1d68>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1d68>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1d68>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1d68>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+	Result: 0 to 20
+  Match 5: ID_Improved vs   AB_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1da0>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1da0>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1da0>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1da0>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1da0>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1da0>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+	Result: 0 to 20
+  Match 6: ID_Improved vs   AB_Open
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1e10>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1e10>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1e10>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1e10>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1e10>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1e10>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1e10>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1e10>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1e10>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1e10>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+	Result: 0 to 20
+  Match 7: ID_Improved vs AB_Improved
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1e80>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1e80>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1e80>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1e80>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1e80>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1e80>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1e80>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1e80>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1e80>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1e80>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1eb8>: 2
+	Result: 0 to 20
+
+
+Results:
+----------
+ID_Improved          0.00%
+
+*************************
+   Evaluating: Student
+*************************
+
+Playing Matches:
+----------
+  Match 1:   Student   vs   Random
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1ef0>: 2 ; <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1ef0>: 2 ; <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1ef0>: 2 ; <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1ef0>: 2 ; <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1ef0>: 2 ; <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1ef0>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1ef0>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1ef0>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1ef0>: 2
+
+Timeout occurred. <sample_players.RandomPlayer object at 0x7f61144b1c50>: 0 ; <game_agent.CustomPlayer object at 0x7f61144b1ef0>: 2
+	Result: 0 to 20
+  Match 2:   Student   vs   MM_Null
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1ef0>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1c88>: 0
+
+Timeout occurred. <game_agent.CustomPlayer object at 0x7f61144b1ef0>: 2 ; <game_agent.CustomPlayer object at 0x7f61144b1c88>: 0
+[ec2-user@ip-172-31-30-123 AIND-Isolation]$

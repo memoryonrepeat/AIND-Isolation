@@ -29,10 +29,19 @@ def survival_heuristic(own_moves, normalized_remaining_moves):
 # prioritize moves closer to center at the beginning
 def positional_heuristic(location, center, normalized_remaining_moves):
     distance = abs(location[0]-center[0])+abs(location[1]-center[1])
-    return normalized_remaining_moves/(distance*5) if distance is not 0 else float("inf")
+    return normalized_remaining_moves/(distance) if distance is not 0 else float("inf")
 
-# too long --> timeout
-# check back to see what's wrong
+# composition of other heuristics with appropriate weights
+def composite_heuristic(game, player, own_moves, opp_moves, move_count, normalized_remaining_moves):
+
+    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, normalized_remaining_moves)
+    survival_score = survival_heuristic(own_moves, normalized_remaining_moves)
+    endgame_score = endgame_heuristic(game, player, move_count, normalized_remaining_moves)
+
+    return lecture_score_improved + 2*survival_score + 3*endgame_score
+
+# see one more level deep and accumulate lecture_heuristic_improved on every successor states
+# only run near end game to avoid high cost
 def endgame_heuristic(game, player, move_count, normalized_remaining_moves):
     if move_count < 30:
         return 0
@@ -53,18 +62,11 @@ def custom_score(game, player):
     own_moves = len(game.get_legal_moves(player))
     opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
     move_count = game.move_count
-    remaining_moves = game.width*game.height - game.move_count
-    normalized_remaining_moves = remaining_moves/(game.width*game.height)
+    normalized_remaining_moves = (game.width*game.height - game.move_count)/(game.width*game.height)
     location = game.get_player_location(player)
     center = (game.width//2, game.height//2)
 
-    lecture_score_improved = lecture_heuristic_improved(own_moves, opp_moves, normalized_remaining_moves)
-    survival_score = survival_heuristic(own_moves, normalized_remaining_moves)
-    positional_score = positional_heuristic(location, center, normalized_remaining_moves)
-    endgame_score = endgame_heuristic(game, player, move_count, normalized_remaining_moves)
-
-    return lecture_score_improved + 2*survival_score + 3*endgame_score
-    
+    return composite_heuristic(game, player, own_moves, opp_moves, move_count, normalized_remaining_moves)
 
 class CustomPlayer:
     """Game-playing agent that chooses a move using your evaluation function
@@ -181,8 +183,6 @@ class CustomPlayer:
                 if not self.iterative:
                     return best_move
                 depth += 1
-                # if self.search_depth != -1 and depth > self.search_depth:
-                #     break
 
         except Timeout:
             # Handle any actions required at timeout, if necessary
